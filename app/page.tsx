@@ -2,7 +2,7 @@ import {
   LocationCheckIn,
   VideoAction,
   CodeAction,
-} from "../components/ActionCard";
+} from "@/components/ActionCard";
 
 export default function Home() {
   return (

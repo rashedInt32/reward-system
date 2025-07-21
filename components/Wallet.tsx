@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { getRewards, resetWallet } from "../lib/storage";
+import { getRewards, resetWallet } from "@/lib/storage";
 import { AvatarPicker } from "./AvatarPicker";
 
 export function Wallet() {

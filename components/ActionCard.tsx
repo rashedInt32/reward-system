@@ -1,8 +1,8 @@
 "use client";
 import { useState, useRef } from "react";
-import { checkIn, canCheckIn, recordCheckIn } from "../lib/geolocation";
-import { addReward } from "../lib/storage";
-import { generateRewardName, generateRewardIcon } from "../lib/rewards";
+import { checkIn, canCheckIn, recordCheckIn } from "@/lib/geolocation";
+import { addReward } from "@/lib/storage";
+import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
 
 export type Reward = { type: string; time: string; icon: string };
 
