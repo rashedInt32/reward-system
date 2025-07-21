@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: 270 20% 10%;
+  --cyan: 180 100% 50%;
+  --magenta: 300 100% 50%;
+  --white: 0 0% 90%;
+  --lime: 120 80% 50%;
+  --red: 0 70% 60%;
+  --gradient: linear-gradient(to bottom right, hsl(270 20% 10%), hsl(240 30% 15%));
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-[hsl(var(--background))] text-[hsl(var(--white))] font-mono tracking-wide;
+}
+
+.action-card {
+  @apply bg-[hsla(0,0%,100%,0.1)] backdrop-blur-md border border-[hsla(0,0%,100%,0.2)] rounded-lg p-6 transition-all duration-300 hover:shadow-[0_0_15px_hsla(180,100%,50%,0.4)];
+}
+
+.reward-card {
+  @apply bg-[hsla(0,0%,100%,0.1)] backdrop-blur-md border border-[hsla(0,0%,100%,0.2)] rounded-lg p-4 flex items-center gap-4;
+}
+
+.nav-bar {
+  @apply sticky top-0 bg-[var(--gradient)] text-[hsl(var(--white))] p-4;
+}
+
+.nav-link {
+  @apply hover:text-[hsl(var(--cyan))] transition-colors duration-200;
+}
+
+.button {
+  @apply bg-[hsl(var(--cyan))] text-[hsl(var(--white))] px-4 py-2 rounded-lg hover:bg-[hsl(180,100%,40%)] transition-colors duration-200;
+}
+
+.progress-bar {
+  @apply w-full h-4 bg-[hsla(0,0%,100%,0.2)] rounded;
+}
+
+.progress-fill {
+  @apply h-4 bg-[hsl(var(--cyan))] rounded transition-[width] duration-300;
+}
+
+.alert {
+  @apply p-2 rounded text-[hsl(var(--white))];
+}
+
+.alert-success {
+  @apply bg-[hsl(var(--lime))];
+}
+
+.alert-error {
+  @apply bg-[hsl(var(--red))];
 }
