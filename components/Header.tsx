@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function Header() {
   return (
-    <div className="nav-bar z-10">
+    <div className="nav-bar z-20">
       <nav className="container max-w-[900px] mx-auto flex justify-between items-center">
         <Link href="/" className="flex">
           <Image src="/images/home.png" alt="Logo" width={35} height={35} />
@@ -18,7 +18,7 @@ export function Header() {
             width={20}
             height={20}
           />
-          <span className="text-sm opacity-0 group-hover:opacity-100 translate-x-10 group-hover:translate-x-2 transition-[opacity, transform] duration-400 delay-100 pr-3">
+          <span className="text-sm text-white opacity-0 group-hover:opacity-100 translate-x-10 group-hover:translate-x-2 transition-[opacity, transform] duration-400 delay-100 pr-3">
             Wallet
           </span>
         </Link>

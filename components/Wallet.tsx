@@ -30,7 +30,7 @@ export function Wallet() {
           resetWallet();
           setRewards([]);
         }}
-        className="button bg-[var(--error)] hover:bg-[var(--secondary)] hover:text-[#002829] hover:shadow-[0_0_15px_rgba(45,121,109,0.5)] hover:outline hover:outline-1 hover:outline-[rgba(45,121,109,0.2)] mb-6"
+        className="button bg-[var(--error)] hover:bg-[var(--secondary)] hover:text-[#002829] hover:shadow-[0_0_15px_rgba(45,121,109,0.5)] hover:outline-[rgba(45,121,109,0.2)] mb-6"
         aria-label="Reset wallet"
       >
         Reset Wallet

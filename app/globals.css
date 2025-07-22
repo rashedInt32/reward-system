@@ -1,20 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --background: #101010; /* Bolt.new-inspired background */
-  --primary: #004445; /* Deep teal for buttons and primary elements */
-  --secondary: #2D796D; /* Lighter teal for hovers and accents */
-  --text: #E6E6E6; /* Soft white for text */
-  --error: #E57373; /* Soft red for errors */
+  --background: #101010;
+  --primary: #004445;
+  --secondary: #2D796D;
+  --text: #333333;
+  --error: #E57373;
   --gradient: linear-gradient(to bottom right, #004445, #101010);
 }
 
 body {
-  @apply bg-white text-[var(--primary)] font-mono tracking-wide;
+  @apply bg-[var(--background)] text-[var(--primary)] font-mono tracking-wide;
 }
 
 .action-card {
-  @apply bg-[rgba(0,68,69,0.1)] backdrop-blur-md border border-[rgba(230,230,230,0.2)] rounded-lg p-6 transition-all duration-200 hover:shadow-[-10px_-10px_20px_rgba(45,121,109,0.4)];
+  @apply bg-[var(--secondary)]/20 backdrop-blur-md border border-[var(--primary)]/50 rounded-lg p-4 lg:p-6 transition-all duration-200 shadow-md hover:shadow-[0px_0px_20px_rgba(45,121,109,0.4)] ;
+}
+
+.card-content {
+  @apply flex items-center justify-between w-full;
+}
+
+.card-title {
+  @apply text-[var(--primary)] text-lg font-bold;
+}
+
+.card-description {
+  @apply text-[var(--text)] mb-2 text-[14px];
 }
 
 .reward-card {
@@ -26,7 +38,7 @@ body {
 }
 
 .button {
-  @apply bg-[var(--primary)] text-[var(--text)] px-4 py-2 rounded-lg shadow-lg hover:bg-[var(--secondary)] hover:text-[#002829] hover:shadow-[0_0_15px_rgba(45,121,109,0.5)] hover:outline-1 hover:outline-[rgba(45,121,109,0.2)] active:bg-[#1F5C52] active:scale-95 transition-[all] duration-200;
+  @apply bg-[var(--primary)] text-white px-4 py-2 rounded-md shadow-lg text-sm hover:bg-[var(--secondary)] hover:shadow-[0_0_15px_rgba(45,121,109,0.5)] hover:outline-0 hover:outline-[rgba(45,121,109,0.2)] active:bg-[#1F5C52] active:scale-95 transition-[all] duration-200 cursor-pointer;
 }
 
 .progress-bar {

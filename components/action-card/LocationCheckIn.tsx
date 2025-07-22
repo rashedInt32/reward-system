@@ -37,14 +37,21 @@ export function LocationCheckIn({
   };
   return (
     <div className="action-card">
-      <h2 className="text-lg text-[var(--primary)]">Check-In</h2>
-      <button
-        onClick={handleCheckIn}
-        className="button"
-        aria-label="Check in to earn reward"
-      >
-        Check In
-      </button>
+      <div className="card-content">
+        <div className="max-w-[75%]">
+          <h2 className="card-title">Check-In</h2>
+          <p className="card-description">
+            Check in at designated locations to earn exclusive digital rewards.
+          </p>
+        </div>
+        <button
+          onClick={handleCheckIn}
+          className="button"
+          aria-label="Check in to earn reward"
+        >
+          Claim
+        </button>
+      </div>
       {message && (
         <p
           className={`alert ${message.includes("earned") ? "alert-success" : "alert-error"} mt-2`}
