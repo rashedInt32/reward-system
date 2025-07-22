@@ -1,5 +1,12 @@
+import { Lato } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import { Layer } from "@/components/Layer";
+import { Header } from "@/components/Header";
+
+const primaryFont = Lato({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 export default function RootLayout({
   children,
@@ -8,16 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <nav className="nav-bar">
-          <Link href="/" className="nav-link mr-4">
-            Home
-          </Link>
-          <Link href="/wallet" className="nav-link">
-            Wallet
-          </Link>
-        </nav>
-        {children}
+      <body className={`${primaryFont.className} text-[var(--primary)]`}>
+        <Header />
+        <Layer />
+        <div className="container m-auto max-w-[760px]">{children}</div>
       </body>
     </html>
   );

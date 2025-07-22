@@ -6,8 +6,12 @@ import { AvatarPicker } from "./AvatarPicker";
 
 export function Wallet() {
   const [rewards, setRewards] = useState(getRewards());
-  const [name, setName] = useState(localStorage.getItem("walletName") || "");
-  const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || "😊");
+  const [name, setName] = useState(
+    window.localStorage.getItem("walletName") || "",
+  );
+  const [avatar, setAvatar] = useState(
+    window.localStorage.getItem("avatar") || "😊",
+  );
   useEffect(() => {
     setName(localStorage.getItem("walletName") || "");
     setAvatar(localStorage.getItem("avatar") || "😊");
@@ -17,7 +21,7 @@ export function Wallet() {
   }, []);
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold text-[hsl(var(--cyan))] mb-4 tracking-wide">
+      <h1 className="text-3xl font-bold text-[var(--primary)] mb-4 tracking-wide">
         {name || "My Wallet"} {avatar}
       </h1>
       <AvatarPicker />
@@ -26,7 +30,7 @@ export function Wallet() {
           resetWallet();
           setRewards([]);
         }}
-        className="button bg-[hsl(var(--red))] hover:bg-[hsl(0,70%,50%)] mb-6"
+        className="button bg-[var(--error)] hover:bg-[var(--secondary)] hover:text-[#002829] hover:shadow-[0_0_15px_rgba(45,121,109,0.5)] hover:outline hover:outline-1 hover:outline-[rgba(45,121,109,0.2)] mb-6"
         aria-label="Reset wallet"
       >
         Reset Wallet
@@ -38,7 +42,7 @@ export function Wallet() {
         ></div>
       </div>
       {rewards.length >= 5 && (
-        <p className="text-[hsl(var(--lime))] mb-4">Super Badge Unlocked!</p>
+        <p className="text-[var(--secondary)] mb-4">Super Badge Unlocked!</p>
       )}
       <div className="grid gap-4">
         {rewards.map(
@@ -59,10 +63,10 @@ export function Wallet() {
                 className="w-12 h-12 rounded-full"
               />
               <div>
-                <p className="font-semibold text-[hsl(var(--cyan))]">
+                <p className="font-semibold text-[var(--primary)]">
                   {reward.type}
                 </p>
-                <p className="text-sm text-[hsl(var(--white))] opacity-80">
+                <p className="text-sm text-[var(--text)] opacity-80">
                   Earned: {new Date(reward.time).toLocaleString()}
                 </p>
               </div>

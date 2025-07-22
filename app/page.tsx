@@ -3,7 +3,7 @@ import {
   LocationCheckIn,
   VideoAction,
   CodeAction,
-} from "@/components/ActionCard";
+} from "@/components/action-card";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
       <h1 className="text-3xl font-bold text-[hsl(var(--cyan))] mb-6 tracking-wide">
         Earn & Collect
       </h1>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="gap-6 flex flex-col">
         <LocationCheckIn onReward={() => {}} />
         <VideoAction onReward={() => {}} />
         <CodeAction onReward={() => {}} />

@@ -1,55 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  --background: 270 20% 10%;
-  --cyan: 180 100% 50%;
-  --magenta: 300 100% 50%;
-  --white: 0 0% 90%;
-  --lime: 120 80% 50%;
-  --red: 0 70% 60%;
-  --gradient: linear-gradient(to bottom right, hsl(270 20% 10%), hsl(240 30% 15%));
+  --background: #101010; /* Bolt.new-inspired background */
+  --primary: #004445; /* Deep teal for buttons and primary elements */
+  --secondary: #2D796D; /* Lighter teal for hovers and accents */
+  --text: #E6E6E6; /* Soft white for text */
+  --error: #E57373; /* Soft red for errors */
+  --gradient: linear-gradient(to bottom right, #004445, #101010);
 }
 
 body {
-  @apply bg-[hsl(var(--background))] text-[hsl(var(--white))] font-mono tracking-wide;
+  @apply bg-white text-[var(--primary)] font-mono tracking-wide;
 }
 
 .action-card {
-  @apply bg-[hsla(0,0%,100%,0.1)] backdrop-blur-md border border-[hsla(0,0%,100%,0.2)] rounded-lg p-6 transition-all duration-300 hover:shadow-[0_0_15px_hsla(180,100%,50%,0.4)];
+  @apply bg-[rgba(0,68,69,0.1)] backdrop-blur-md border border-[rgba(230,230,230,0.2)] rounded-lg p-6 transition-all duration-200 hover:shadow-[-10px_-10px_20px_rgba(45,121,109,0.4)];
 }
 
 .reward-card {
-  @apply bg-[hsla(0,0%,100%,0.1)] backdrop-blur-md border border-[hsla(0,0%,100%,0.2)] rounded-lg p-4 flex items-center gap-4;
+  @apply bg-[rgba(0,68,69,0.1)] backdrop-blur-md border border-[rgba(230,230,230,0.2)] rounded-lg p-4 flex items-center gap-4;
 }
 
 .nav-bar {
-  @apply sticky top-0 bg-[var(--gradient)] text-[hsl(var(--white))] p-4;
-}
-
-.nav-link {
-  @apply hover:text-[hsl(var(--cyan))] transition-colors duration-200;
+  @apply sticky top-0 bg-[var(--primary)] text-[var(--text)] p-4 shadow-[-10px_-10px_20px_rgba(45,121,109,0.4)];
 }
 
 .button {
-  @apply bg-[hsl(var(--cyan))] text-[hsl(var(--white))] px-4 py-2 rounded-lg hover:bg-[hsl(180,100%,40%)] transition-colors duration-200;
+  @apply bg-[var(--primary)] text-[var(--text)] px-4 py-2 rounded-lg shadow-lg hover:bg-[var(--secondary)] hover:text-[#002829] hover:shadow-[0_0_15px_rgba(45,121,109,0.5)] hover:outline hover:outline-1 hover:outline-[rgba(45,121,109,0.2)] active:bg-[#1F5C52] active:scale-95 transition-[all] duration-200;
 }
 
 .progress-bar {
-  @apply w-full h-4 bg-[hsla(0,0%,100%,0.2)] rounded;
+  @apply w-full h-4 bg-[rgba(0,68,69,0.2)] rounded;
 }
 
 .progress-fill {
-  @apply h-4 bg-[hsl(var(--cyan))] rounded transition-[width] duration-300;
+  @apply h-4 bg-[var(--secondary)] rounded transition-[width] duration-300;
 }
 
 .alert {
-  @apply p-2 rounded text-[hsl(var(--white))];
+  @apply p-2 rounded text-[var(--text)];
 }
 
 .alert-success {
-  @apply bg-[hsl(var(--lime))];
+  @apply bg-[var(--secondary)];
 }
 
 .alert-error {
-  @apply bg-[hsl(var(--red))];
+  @apply bg-[var(--error)];
+}
+
+.glow-overlay {
+  @apply fixed top-0 left-0 w-1/2 h-1/2 pointer-events-none z-[-1] shadow-[-20px_-20px_40px_rgba(45,121,109,0.3)];
 }

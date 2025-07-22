@@ -20,12 +20,12 @@ export function AvatarPicker() {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder={suggestedName || "Wallet Name"}
-        className="border border-[hsla(0,0%,100%,0.2)] bg-[hsla(0,0%,100%,0.05)] text-[hsl(var(--white))] p-2 rounded-lg w-full"
+        className="border border-[rgba(230,230,230,0.2)] bg-[rgba(0,68,69,0.05)] text-[var(--text)] p-2 rounded-lg w-full"
       />
       <select
         value={avatar}
         onChange={(e) => setAvatar(e.target.value)}
-        className="border border-[hsla(0,0%,100%,0.2)] bg-[hsla(0,0%,100%,0.05)] text-[hsl(var(--white))] p-2 rounded-lg mt-2"
+        className="border border-[rgba(230,230,230,0.2)] bg-[rgba(0,68,69,0.05)] text-[var(--text)] p-2 rounded-lg mt-2"
       >
         <option value="😊">😊</option>
         <option value="🔥">🔥</option>
