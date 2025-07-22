@@ -3,6 +3,7 @@ import { useState } from "react";
 import { checkIn, canCheckIn, recordCheckIn } from "@/lib/geolocation";
 import { addReward } from "@/lib/storage";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
+import { Button } from "../Button";
 
 export type Reward = { type: string; time: string; icon: string };
 
@@ -44,13 +45,7 @@ export function LocationCheckIn({
             Check in at designated locations to earn exclusive digital rewards.
           </p>
         </div>
-        <button
-          onClick={handleCheckIn}
-          className="button"
-          aria-label="Check in to earn reward"
-        >
-          Claim
-        </button>
+        <Button onClick={handleCheckIn}>Claim</Button>
       </div>
       {message && (
         <p

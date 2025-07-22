@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { addReward } from "@/lib/storage";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
+import { Button } from "@/components/Button";
 
 export type Reward = { type: string; time: string; icon: string };
 
@@ -36,35 +37,28 @@ export function CodeAction({
             Scan or enter a valid code to unlock special digital rewards.
           </p>
         </div>
-        <button
-          onClick={() => {}}
-          className="button"
-          aria-label="Check in to earn reward"
-        >
+
+        <Button onClick={() => {}} className="button">
           Claim
-        </button>
+        </Button>
       </div>
-      {/* <input */}
-      {/*   type="text" */}
-      {/*   value={code} */}
-      {/*   onChange={(e) => setCode(e.target.value)} */}
-      {/*   placeholder="Enter code" */}
-      {/*   className="border border-[rgba(230,230,230,0.2)] bg-[rgba(0,68,69,0.05)] text-[var(--text)] p-2 rounded-lg w-full" */}
-      {/* /> */}
-      {/* <button */}
-      {/*   onClick={handleSubmit} */}
-      {/*   className="button mt-2" */}
-      {/*   aria-label="Submit code" */}
-      {/* > */}
-      {/*   Submit */}
-      {/* </button> */}
-      {/* {message && ( */}
-      {/*   <p */}
-      {/*     className={`alert ${message.includes("earned") ? "alert-success" : "alert-error"} mt-2`} */}
-      {/*   > */}
-      {/*     {message} */}
-      {/*   </p> */}
-      {/* )} */}
+      <div className="flex gap-6">
+        <input
+          type="text"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder="Enter code"
+          className="border border-[rgba(230,230,230,0.2)] bg-[rgba(0,68,69,0.05)] text-[var(--text)] p-2 rounded-lg flex-1"
+        />
+        <Button onClick={handleSubmit}>Submit Code</Button>
+        {message && (
+          <p
+            className={`alert ${message.includes("earned") ? "alert-success" : "alert-error"} mt-2`}
+          >
+            {message}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

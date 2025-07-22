@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import { addReward } from "@/lib/storage";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
+import { Button } from "../Button";
 
 export type Reward = { type: string; time: string; icon: string };
 
@@ -37,13 +38,7 @@ export function VideoAction({
             Watch a 15-second video to collect a unique digital reward.
           </p>
         </div>
-        <button
-          onClick={() => {}}
-          className="button"
-          aria-label="Check in to earn reward"
-        >
-          Claim
-        </button>
+        <Button onClick={() => {}}>Claim</Button>
       </div>
 
       {/* <video */}
