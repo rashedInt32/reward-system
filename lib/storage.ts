@@ -16,5 +16,7 @@ export const addReward = (reward: Reward) => {
 export const resetWallet = () => {
   if (typeof window === "undefined") return;
   localStorage.setItem("rewards", "[]");
+  localStorage.setItem("lastCheckIn", "");
+  localStorage.setItem("walletName", "");
   window.dispatchEvent(new Event("storage"));
 };

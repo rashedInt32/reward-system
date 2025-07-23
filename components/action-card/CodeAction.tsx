@@ -9,13 +9,10 @@ export type Reward = { type: string; time: string; icon: string };
 
 export function CodeAction() {
   const [showInput, setShowInput] = useState<boolean>(false);
-  const { code, setCode, validCodes, handleReward, loading } = useActionCard();
+  const { code, setCode, validCodes, handleScanCode, loading } =
+    useActionCard();
 
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleClaimCode = async () => {
-    setShowInput(true);
-  };
 
   useEffect(() => {
     if (inputRef.current) {
@@ -35,7 +32,7 @@ export function CodeAction() {
         </div>
 
         {!showInput && (
-          <Button onClick={handleClaimCode} className="button">
+          <Button onClick={() => setShowInput(true)} className="button">
             Claim
           </Button>
         )}
@@ -61,7 +58,7 @@ export function CodeAction() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleReward("code");
+              handleScanCode();
             }}
             className="flex gap-4"
           >
@@ -73,7 +70,7 @@ export function CodeAction() {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="Enter code"
-              className="border border-[var(--primary)] bg-[var(--primary)]/70 text-[var(--text)] outline-none  p-3 rounded-md flex-1"
+              className="border border-[var(--primary)] bg-[var(--primary)]/70 text-[var(--text)] outline-none py-2 p-3 rounded-md flex-1"
             />
             <Button
               type="submit"

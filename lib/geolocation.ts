@@ -1,8 +1,8 @@
 export const checkIn = (
   userLat: number,
   userLng: number,
-  targetLat = 40.7128,
-  targetLng = -74.006,
+  targetLat = 23.762002901299695,
+  targetLng = 90.35765865180731,
 ) => {
   const R = 6371e3; // Earth's radius in meters
   const dLat = ((targetLat - userLat) * Math.PI) / 180;
