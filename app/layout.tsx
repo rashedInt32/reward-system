@@ -15,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${primaryFont.className} text-[var(--primary)]`}>
+      <body
+        className={`${primaryFont.className} text-[var(--primary)] bg-gradient-to-br from-slate-900 to-cyan-900`}
+      >
         <Header />
         <Layer />
         <div className="container m-auto max-w-[760px]">{children}</div>
