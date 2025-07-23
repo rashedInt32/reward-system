@@ -6,11 +6,7 @@ import { Button } from "../Button";
 
 export type Reward = { type: string; time: string; icon: string };
 
-export function VideoAction({
-  onReward,
-}: {
-  onReward: (reward: Reward) => void;
-}) {
+export function VideoAction() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [rewardEarned, setRewardEarned] = useState(false);
   const handleTimeUpdate = async () => {
@@ -21,9 +17,12 @@ export function VideoAction({
     ) {
       const name = await generateRewardName("video");
       const icon = await generateRewardIcon(name);
-      const reward = { type: name, time: new Date().toISOString(), icon };
+      const reward: Reward = {
+        type: name,
+        time: new Date().toISOString(),
+        icon,
+      };
       addReward(reward);
-      onReward(reward);
       setRewardEarned(true);
       new Audio("/sounds/reward.mp3").play();
       videoRef.current.removeEventListener("timeupdate", handleTimeUpdate);

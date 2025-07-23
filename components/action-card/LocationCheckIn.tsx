@@ -7,11 +7,7 @@ import { Button } from "../Button";
 
 export type Reward = { type: string; time: string; icon: string };
 
-export function LocationCheckIn({
-  onReward,
-}: {
-  onReward: (reward: Reward) => void;
-}) {
+export function LocationCheckIn() {
   const [message, setMessage] = useState("");
   const handleCheckIn = async () => {
     if (!canCheckIn()) {

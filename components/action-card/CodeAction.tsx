@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { Button } from "@/components/Button";
 import { useActionCard } from "./useActionCard";
@@ -7,12 +7,21 @@ import { useActionCard } from "./useActionCard";
 export type Reward = { type: string; time: string; icon: string };
 
 export function CodeAction() {
-  const [showInput, setShowInput] = useState(false);
-  const { code, setCode, validCodes, handleReward, message } = useActionCard();
+  const [showInput, setShowInput] = useState<boolean>(false);
+  const { code, setCode, validCodes, handleReward } = useActionCard();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClaimCode = async () => {
     setShowInput(true);
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    setCode("");
+  }, [showInput]);
 
   return (
     <div className="action-card">
@@ -34,9 +43,9 @@ export function CodeAction() {
       {showInput && (
         <div className="pt-6">
           <div className="flex items-center justify-between">
-            <h3 className="mb-4">
+            <h3 className="mb-4 text-white/70">
               Submit QR code and get the rewards.{" "}
-              <pre className="text-black text-sm">
+              <pre className="text-white text-sm">
                 ValidCodes: {validCodes.map((code) => `${code} `)}
               </pre>
             </h3>
@@ -47,23 +56,26 @@ export function CodeAction() {
               &times;
             </Button>
           </div>
-          <div className="flex gap-6">
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleReward("code");
+            }}
+            className="flex gap-4"
+          >
             <input
+              id="code-input"
+              ref={inputRef}
+              name="code"
               type="text"
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="Enter code"
-              className="border border-[rgba(230,230,230,0.2)] bg-[rgba(0,68,69,0.05)] text-[var(--text)] p-2 rounded-lg flex-1"
+              className="border border-[var(--primary)] bg-[var(--primary)]/70 text-[var(--text)] outline-none  p-3 rounded-md flex-1"
             />
-            <Button onClick={() => handleReward("code")}>Submit Code</Button>
-            {message && (
-              <p
-                className={`alert ${message.includes("earned") ? "alert-success" : "alert-error"} mt-2`}
-              >
-                {message}
-              </p>
-            )}
-          </div>
+            <Button type="submit">Submit Code</Button>
+          </form>
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 import { Lato } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 import { Layer } from "@/components/Layer";
 import { Header } from "@/components/Header";
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       >
         <Header />
         <Layer />
+        <Toaster position="bottom-right" />
         <div className="container m-auto max-w-[760px]">{children}</div>
       </body>
     </html>

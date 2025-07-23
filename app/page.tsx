@@ -1,4 +1,3 @@
-"use client";
 import {
   LocationCheckIn,
   VideoAction,
@@ -16,9 +15,9 @@ export default function Home() {
         videos, or scanning codes.
       </p>
       <div className="gap-6 flex flex-col">
-        <LocationCheckIn onReward={() => {}} />
-        <VideoAction onReward={() => {}} />
-        <CodeAction onReward={() => {}} />
+        <LocationCheckIn />
+        <VideoAction />
+        <CodeAction />
       </div>
     </div>
   );
