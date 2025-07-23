@@ -77,9 +77,9 @@ export function CodeAction() {
             />
             <Button
               type="submit"
-              className="button flex items-center justify-center"
+              className="button flex items-center justify-center min-w-[94px]"
             >
-              {!loading ? <Loader /> : "Submit Code"}
+              {loading ? <Loader /> : "Submit"}
             </Button>
           </form>
         </div>
