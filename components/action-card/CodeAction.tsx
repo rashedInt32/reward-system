@@ -3,12 +3,13 @@ import { useRef, useState, useEffect } from "react";
 
 import { Button } from "@/components/Button";
 import { useActionCard } from "./useActionCard";
+import { Loader } from "../Loader";
 
 export type Reward = { type: string; time: string; icon: string };
 
 export function CodeAction() {
   const [showInput, setShowInput] = useState<boolean>(false);
-  const { code, setCode, validCodes, handleReward } = useActionCard();
+  const { code, setCode, validCodes, handleReward, loading } = useActionCard();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -74,7 +75,12 @@ export function CodeAction() {
               placeholder="Enter code"
               className="border border-[var(--primary)] bg-[var(--primary)]/70 text-[var(--text)] outline-none  p-3 rounded-md flex-1"
             />
-            <Button type="submit">Submit Code</Button>
+            <Button
+              type="submit"
+              className="button flex items-center justify-center"
+            >
+              {!loading ? <Loader /> : "Submit Code"}
+            </Button>
           </form>
         </div>
       )}

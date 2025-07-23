@@ -21,7 +21,6 @@ export function LocationCheckIn() {
           const icon = await generateRewardIcon(name);
           const reward = { type: name, time: new Date().toISOString(), icon };
           addReward(reward);
-          onReward(reward);
           recordCheckIn();
           setMessage("Reward earned!");
           new Audio("/sounds/reward.mp3").play();

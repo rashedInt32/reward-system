@@ -6,6 +6,7 @@ import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
 export const useActionCard = () => {
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
   const validCodes = ["REWARD123", "CODE456"];
 
   // Play sound when a reward is earned
@@ -19,6 +20,7 @@ export const useActionCard = () => {
 
   const handleReward = async (name: string) => {
     if (code.trim() === "") return toast.error("Please enter a code.");
+    setLoading(true);
 
     if (validCodes.includes(code)) {
       const reward = await generateReward(name);
@@ -31,6 +33,7 @@ export const useActionCard = () => {
       setMessage("Invalid code!");
       toast.error("Invalid code!");
     }
+    setLoading(false);
   };
 
   return {
@@ -40,5 +43,6 @@ export const useActionCard = () => {
     message,
     setMessage,
     handleReward,
+    loading,
   };
 };
