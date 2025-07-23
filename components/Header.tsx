@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function Header() {
   return (
-    <div className="nav-bar z-20">
+    <div className="nav-bar z-10">
       <nav className="container max-w-[900px] mx-auto flex justify-between items-center">
         <Link href="/" className="flex">
           <Image src="/images/home.png" alt="Logo" width={35} height={35} />

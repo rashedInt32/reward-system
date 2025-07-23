@@ -4,10 +4,15 @@ import { addReward } from "@/lib/storage";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
 
 import { checkIn, canCheckIn, recordCheckIn } from "@/lib/geolocation";
+import { colgroup } from "framer-motion/client";
 
 export const useActionCard = () => {
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
+  const [targetCoord, setTargetCoord] = useState({
+    lat: 23.769778495411554,
+    lng: 90.35551889664085,
+  });
   const [loading, setLoading] = useState<boolean>(false);
   const validCodes = ["REWARD123", "CODE456"];
 
@@ -20,6 +25,16 @@ export const useActionCard = () => {
     return { type: rewardName, time: new Date().toISOString(), icon };
   };
 
+  const getTargetCoordinates = async () => {
+    navigator.geolocation.getCurrentPosition(
+      async ({ coords }) => {
+        setTargetCoord({ lat: coords.latitude, lng: coords.longitude });
+        toast.success(`Successfully set Target coordinates`);
+      },
+      () => toast.error("Geolocation permission denied"),
+    );
+  };
+
   const handleCheckIn = async () => {
     setLoading(true);
     if (!canCheckIn()) {
@@ -29,16 +44,26 @@ export const useActionCard = () => {
 
     navigator.geolocation.getCurrentPosition(
       async ({ coords }) => {
-        if (checkIn(coords.latitude, coords.longitude)) {
+        if (
+          checkIn(
+            coords.latitude,
+            coords.longitude,
+            targetCoord.lat,
+            targetCoord.lng,
+          )
+        ) {
           const reward = await generateReward("checkin");
           addReward(reward);
           recordCheckIn();
           toast.success("Checkin reward earned!");
           playSound();
+          setLoading(false);
         } else {
-          toast.error("Too far from location!");
+          setTimeout(() => {
+            toast.error("Too far from location!");
+            setLoading(false);
+          }, 1000);
         }
-        setLoading(false);
       },
       () => {
         toast.error("Geolocation permission denied");
@@ -71,5 +96,6 @@ export const useActionCard = () => {
     handleScanCode,
     handleCheckIn,
     loading,
+    getTargetCoordinates,
   };
 };

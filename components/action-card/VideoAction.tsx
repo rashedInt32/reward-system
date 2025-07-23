@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { addReward } from "@/lib/storage";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
 import { Button } from "../Button";
+import { Modal } from "../Modal";
 
 export type Reward = { type: string; time: string; icon: string };
 
@@ -40,15 +41,17 @@ export function VideoAction() {
         <Button onClick={() => {}}>Claim</Button>
       </div>
 
-      {/* <video */}
-      {/*   ref={videoRef} */}
-      {/*   controls */}
-      {/*   onTimeUpdate={handleTimeUpdate} */}
-      {/*   className="w-full rounded-lg" */}
-      {/* > */}
-      {/*   <source src="/sample-video.mp4" type="video/mp4" /> */}
-      {/*   <track kind="captions" srcLang="en" src="/captions.vtt" default /> */}
-      {/* </video> */}
+      <Modal isOpen={false} onClose={() => {}}>
+        <video
+          ref={videoRef}
+          controls
+          onTimeUpdate={handleTimeUpdate}
+          className="w-full rounded-lg aspect-ratio"
+        >
+          <source src="/videos/video-reward.mp4" type="video/mp4" />
+          <track kind="captions" srcLang="en" src="/captions.vtt" default />
+        </video>
+      </Modal>
     </div>
   );
 }
