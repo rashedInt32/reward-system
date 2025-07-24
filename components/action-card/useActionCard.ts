@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, RefObject } from "react";
 import { toast } from "react-hot-toast";
 import { addReward } from "@/lib/storage";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
 
 import { checkIn, canCheckIn, recordCheckIn } from "@/lib/geolocation";
-import { colgroup } from "framer-motion/client";
+
+interface VideoRewardParams {
+  videoRef: RefObject<HTMLVideoElement>;
+}
 
 export const useActionCard = () => {
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
+  const [videoRewardEarned, setVideoRewardEarned] = useState(false);
   const [targetCoord, setTargetCoord] = useState({
     lat: 23.769778495411554,
     lng: 90.35551889664085,
@@ -23,6 +27,49 @@ export const useActionCard = () => {
     const rewardName = await generateRewardName(name);
     const icon = await generateRewardIcon(rewardName);
     return { type: rewardName, time: new Date().toISOString(), icon };
+  };
+
+  // Handle video reward logic
+  const handleVideoReward = async (
+    videoRef: RefObject<HTMLVideoElement | null>,
+  ) => {
+    if (
+      videoRef.current &&
+      videoRef.current.currentTime >= 15 &&
+      !videoRewardEarned
+    ) {
+      const reward = await generateReward("video");
+      addReward(reward);
+      setVideoRewardEarned(true);
+      playSound();
+      toast.success("Video reward earned!");
+    }
+  };
+
+  // Optional: Helper to set up video event listener
+  const setupVideoRewardListener = (
+    videoRef: RefObject<HTMLVideoElement | null>,
+  ) => {
+    useEffect(() => {
+      const video = videoRef.current;
+      if (video) {
+        video.addEventListener("timeupdate", () => handleVideoReward(videoRef));
+        return () => {
+          video.removeEventListener("timeupdate", () =>
+            handleVideoReward(videoRef),
+          );
+        };
+      }
+    }, [videoRef, videoRewardEarned]);
+
+    // Return a cleanup function to remove listener manually if needed
+    return () => {
+      const video = videoRef.current;
+      if (video) {
+        const handler = () => handleVideoReward(videoRef);
+        video.removeEventListener("timeupdate", handler);
+      }
+    };
   };
 
   const getTargetCoordinates = async () => {
@@ -97,5 +144,9 @@ export const useActionCard = () => {
     handleCheckIn,
     loading,
     getTargetCoordinates,
+    videoRewardEarned,
+    setVideoRewardEarned,
+    handleVideoReward,
+    setupVideoRewardListener,
   };
 };

@@ -1,3 +1,5 @@
+import { motion, AnimatePresence } from "framer-motion";
+
 export const Modal = ({
   isOpen,
   onClose,
@@ -7,19 +9,41 @@ export const Modal = ({
   onClose: () => void;
   children: React.ReactNode;
 }) => {
-  if (!isOpen) return null;
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only close if the click is on the overlay (not the modal content)
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-      <div className="bg-[var(--primary)] relative rounded-lg shadow-lg p-4 w-full max-w-4xl">
-        <button
-          onClick={onClose}
-          className=" absolute top-[-30px] right-[-30px] text-gray-500 hover:text-gray-700 text-4xl"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={handleOverlayClick}
         >
-          &times;
-        </button>
-        {children}
-      </div>
-    </div>
+          <motion.div
+            className="bg-[var(--primary)] relative rounded-lg shadow-lg w-full max-w-4xl"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <button
+              onClick={onClose}
+              className="absolute cursor-pointer top-[-30px] right-[-30px] text-gray-400 hover:text-white text-4xl"
+            >
+              ×
+            </button>
+            {children}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

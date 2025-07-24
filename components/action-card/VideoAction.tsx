@@ -1,34 +1,27 @@
 "use client";
 import { useState, useRef } from "react";
-import { addReward } from "@/lib/storage";
-import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
-
-export type Reward = { type: string; time: string; icon: string };
+import { useActionCard } from "./useActionCard";
 
 export function VideoAction() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [rewardEarned, setRewardEarned] = useState(false);
-  const handleTimeUpdate = async () => {
-    if (
-      videoRef.current &&
-      videoRef.current.currentTime >= 15 &&
-      !rewardEarned
-    ) {
-      const name = await generateRewardName("video");
-      const icon = await generateRewardIcon(name);
-      const reward: Reward = {
-        type: name,
-        time: new Date().toISOString(),
-        icon,
-      };
-      addReward(reward);
-      setRewardEarned(true);
-      new Audio("/sounds/reward.mp3").play();
-      videoRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-    }
+  const [showModal, setShowModal] = useState(false);
+  const { handleVideoReward, setupVideoRewardListener, setVideoRewardEarned } =
+    useActionCard();
+
+  const cleanupVideoListener = setupVideoRewardListener(videoRef);
+  const handleTimeUpdate = () => {
+    handleVideoReward(videoRef);
   };
+
+  // Handle modal close with cleanup
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setVideoRewardEarned(false); // Reset reward state
+    cleanupVideoListener(); // Remove listener
+  };
+
   return (
     <div className="action-card">
       <div className="card-content">
@@ -38,10 +31,10 @@ export function VideoAction() {
             Watch a 15-second video to collect a unique digital reward.
           </p>
         </div>
-        <Button onClick={() => {}}>Claim</Button>
+        <Button onClick={() => setShowModal(true)}>Claim</Button>
       </div>
 
-      <Modal isOpen={false} onClose={() => {}}>
+      <Modal isOpen={showModal} onClose={handleCloseModal}>
         <video
           ref={videoRef}
           controls

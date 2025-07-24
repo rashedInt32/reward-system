@@ -6,7 +6,7 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen p-4 pt-8 z-10 relative">
+    <div className="min-h-screen p-4 pt-8 relative">
       <h1 className="text-3xl font-bold text-white mb-3 tracking-wide">
         Earn & Collect
       </h1>
