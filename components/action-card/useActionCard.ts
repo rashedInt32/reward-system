@@ -1,18 +1,19 @@
-import { useState, useEffect, RefObject } from "react";
+import { useState, RefObject } from "react";
 import { toast } from "react-hot-toast";
 import { addReward } from "@/lib/storage";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
-
 import { checkIn, canCheckIn, recordCheckIn } from "@/lib/geolocation";
 
-interface VideoRewardParams {
-  videoRef: RefObject<HTMLVideoElement>;
+interface Reward {
+  type: string;
+  time: string;
+  icon: string;
 }
 
 export const useActionCard = () => {
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
-  const [videoRewardEarned, setVideoRewardEarned] = useState(false);
+  const [secondsWatched, setSecondsWatched] = useState(0);
   const [targetCoord, setTargetCoord] = useState({
     lat: 23.769778495411554,
     lng: 90.35551889664085,
@@ -21,55 +22,58 @@ export const useActionCard = () => {
   const validCodes = ["REWARD123", "CODE456"];
 
   // Play sound when a reward is earned
-  const playSound = () => new Audio("/sounds/reward.mp3").play();
+  const playSound = () => {
+    try {
+      new Audio("/sounds/reward.mp3").play();
+    } catch (error) {}
+  };
 
-  const generateReward = async (name: string) => {
+  // Generate a reward object
+  const generateReward = async (name: string): Promise<Reward> => {
     const rewardName = await generateRewardName(name);
-    const icon = await generateRewardIcon(rewardName);
-    return { type: rewardName, time: new Date().toISOString(), icon };
+    const icon = await generateRewardIcon();
+    return {
+      type: rewardName,
+      time: new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
+      icon,
+    };
   };
 
   // Handle video reward logic
-  const handleVideoReward = async (
-    videoRef: RefObject<HTMLVideoElement | null>,
-  ) => {
-    if (
-      videoRef.current &&
-      videoRef.current.currentTime >= 15 &&
-      !videoRewardEarned
-    ) {
-      const reward = await generateReward("video");
-      addReward(reward);
-      setVideoRewardEarned(true);
-      playSound();
-      toast.success("Video reward earned!");
+  const handleVideoReward = async () => {
+    if (secondsWatched >= 15) {
+      try {
+        const reward = await generateReward("video");
+        addReward(reward);
+        playSound();
+        toast.success("Video reward earned!");
+      } catch (error) {
+        toast.error("Failed to earn video reward");
+      }
+    } else {
+      toast.error("You didn't watch until 15 seconds");
     }
   };
 
-  // Optional: Helper to set up video event listener
+  // Utility to create video event handler and cleanup
   const setupVideoRewardListener = (
     videoRef: RefObject<HTMLVideoElement | null>,
   ) => {
-    useEffect(() => {
-      const video = videoRef.current;
-      if (video) {
-        video.addEventListener("timeupdate", () => handleVideoReward(videoRef));
-        return () => {
-          video.removeEventListener("timeupdate", () =>
-            handleVideoReward(videoRef),
-          );
-        };
+    const handler = () => {
+      if (videoRef.current) {
+        const currentTime = videoRef.current.currentTime;
+        if (currentTime > secondsWatched) {
+          setSecondsWatched(currentTime);
+        }
       }
-    }, [videoRef, videoRewardEarned]);
-
-    // Return a cleanup function to remove listener manually if needed
-    return () => {
+    };
+    const cleanup = () => {
       const video = videoRef.current;
       if (video) {
-        const handler = () => handleVideoReward(videoRef);
         video.removeEventListener("timeupdate", handler);
       }
     };
+    return { handler, cleanup };
   };
 
   const getTargetCoordinates = async () => {
@@ -144,8 +148,8 @@ export const useActionCard = () => {
     handleCheckIn,
     loading,
     getTargetCoordinates,
-    videoRewardEarned,
-    setVideoRewardEarned,
+    secondsWatched,
+    setSecondsWatched,
     handleVideoReward,
     setupVideoRewardListener,
   };

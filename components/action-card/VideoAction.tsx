@@ -1,25 +1,43 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { useActionCard } from "./useActionCard";
 
+export type Reward = { type: string; time: string; icon: string };
+
 export function VideoAction() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [showModal, setShowModal] = useState(false);
-  const { handleVideoReward, setupVideoRewardListener, setVideoRewardEarned } =
+  const { setupVideoRewardListener, setSecondsWatched, handleVideoReward } =
     useActionCard();
 
-  const cleanupVideoListener = setupVideoRewardListener(videoRef);
-  const handleTimeUpdate = () => {
-    handleVideoReward(videoRef);
-  };
+  // Set up video listener when modal is open
+  useEffect(() => {
+    if (showModal && videoRef.current) {
+      const { handler, cleanup } = setupVideoRewardListener(videoRef);
+      videoRef.current.addEventListener("timeupdate", handler);
+      return () => {
+        cleanup();
+      };
+    }
+  }, [showModal, setupVideoRewardListener]);
 
-  // Handle modal close with cleanup
+  // Reset video and state when modal opens
+  useEffect(() => {
+    if (showModal && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      setSecondsWatched(0);
+    }
+  }, [showModal, setSecondsWatched]);
+
+  // Handle modal close
   const handleCloseModal = () => {
     setShowModal(false);
-    setVideoRewardEarned(false); // Reset reward state
-    cleanupVideoListener(); // Remove listener
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    handleVideoReward();
   };
 
   return (
@@ -38,7 +56,6 @@ export function VideoAction() {
         <video
           ref={videoRef}
           controls
-          onTimeUpdate={handleTimeUpdate}
           className="w-full rounded-lg aspect-ratio"
         >
           <source src="/videos/video-reward.mp4" type="video/mp4" />

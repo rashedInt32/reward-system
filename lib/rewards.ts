@@ -1,21 +1,24 @@
+import { InferenceClient } from "@huggingface/inference";
+
+const hf = new InferenceClient(process.env.NEXT_PUBLIC_HF_API_KEY);
+
 export async function generateRewardName(actionType: string): Promise<string> {
   try {
-    const response = await fetch(
-      "https://api-inference.huggingface.co/models/distilgpt2",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.HF_API_KEY}`,
-          "Content-Type": "application/json",
+    const response = await hf.chatCompletion({
+      model: "meta-llama/Llama-3.1-8B-Instruct",
+      provider: "sambanova", // or together, fal-ai, replicate, cohere …
+      messages: [
+        {
+          role: "user",
+          content: `Generate a creative name for a digital reward token related to ${actionType}, just the name please, do not add any description or conversation text, just random reward name`,
         },
-        body: JSON.stringify({
-          inputs: `Generate a creative name for a digital reward token related to ${actionType}`,
-          parameters: { max_length: 20 },
-        }),
-      },
-    );
-    const { generated_text } = await response.json();
-    return generated_text?.trim() || `Default ${actionType} Token`;
+      ],
+      max_tokens: 20,
+      temperature: 0.5,
+    });
+
+    const walletName = response?.choices[0]?.message?.content?.trim();
+    return walletName || `Default ${actionType} Token`;
   } catch (error) {
     console.error("AI generation failed:", error);
     const fallbacks = {
@@ -28,26 +31,49 @@ export async function generateRewardName(actionType: string): Promise<string> {
   }
 }
 
-export async function generateRewardIcon(name: string): Promise<string> {
+export async function generateRewardIcon() {
+  const randomNumber = Math.floor(Math.random() * 47) + 1;
+  return `/images/icons/${randomNumber}.png`;
+}
+
+type HFTextToImageResponse = {
+  data: { b64_json: string; url?: string | null }[];
+  id?: string;
+};
+
+export async function generateRewardIconByAI(name: string): Promise<string> {
   try {
-    // Placeholder for Craiyon/Stable Diffusion API
-    // For simplicity, use static icons as a fallback
-    return `/icons/${name.toLowerCase().replace(/\s+/g, "-")}.png`;
+    const response = await hf.textToImage({
+      model: "black-forest-labs/FLUX.1-dev",
+      inputs: `A 64x64 pixel shiny badge icon for a reward named ${name}, flat design, transparent background`,
+      parameters: {
+        negative_prompt: "blurry, low quality, distorted",
+        width: 64,
+        height: 64,
+      },
+    });
+
+    const { data } = response as unknown as HFTextToImageResponse;
+
+    if (
+      !Array.isArray(data) ||
+      data.length === 0 ||
+      typeof data[0]?.b64_json !== "string"
+    ) {
+      console.error("Invalid API response structure:", data);
+      throw new Error("Missing or invalid base64 image");
+    }
+
+    const base64 = data[0].b64_json.trim();
+
+    // Optional: sanity check the base64 string length
+    if (base64.length < 1000) {
+      console.warn("Base64 string seems too short, something may be wrong");
+    }
+
+    return `data:image/png;base64,${base64}`;
   } catch (error) {
-    console.error("Icon generation failed:", error);
-    const fallbacks = {
-      checkin: "/icons/quantum-shard.png",
-      video: "/icons/nebula-badge.png",
-      code: "/icons/aether-token.png",
-    };
-    return (
-      fallbacks[
-        name.toLowerCase().includes("shard")
-          ? "checkin"
-          : name.toLowerCase().includes("badge")
-            ? "video"
-            : "code"
-      ] || "/icons/generic.png"
-    );
+    console.error("FLUX.1 icon generation failed:", error);
+    return "/images/icons/default.png";
   }
 }

@@ -10,7 +10,6 @@ export const Modal = ({
   children: React.ReactNode;
 }) => {
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only close if the click is on the overlay (not the modal content)
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -28,7 +27,7 @@ export const Modal = ({
           onClick={handleOverlayClick}
         >
           <motion.div
-            className="bg-[var(--primary)] relative rounded-lg shadow-lg w-full max-w-4xl"
+            className="p-2 relative rounded-lg shadow-lg w-full max-w-4xl"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}

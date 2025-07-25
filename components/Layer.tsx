@@ -8,6 +8,7 @@ export function Layer() {
           alt="Loading..."
           width={400}
           height={400}
+          priority
           className="w-[200px] h-[200px] lg:w-[400px] lg:h-[400px]"
         />
       </div>
