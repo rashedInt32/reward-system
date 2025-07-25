@@ -27,7 +27,7 @@ export function AvatarPicker() {
         name="avatar"
         value={avatar}
         onChange={(e) => setAvatar(e.target.value)}
-        className="border border-white/80 text-[var(--text)] p-2 px-4 rounded-lg"
+        className="border border-white/80 text-[var(--text)] p-2 px-4 rounded-lg flex-1"
       >
         <option value="😊">😊</option>
         <option value="🔥">🔥</option>

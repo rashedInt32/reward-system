@@ -17,16 +17,30 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { actionType } = await request.json();
-    if (!["checkin", "video", "code", "wallet"].includes(actionType)) {
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
+
+    const { actionType } = body;
+    const validActions = ["checkin", "video", "code", "wallet"];
+    if (!validActions.includes(actionType)) {
       return NextResponse.json(
         { error: "Invalid action type" },
         { status: 400 },
       );
     }
+
     const name = await generateRewardName(actionType);
     const icon = await generateRewardIcon();
-    const reward = { type: name, time: new Date().toISOString(), icon };
+    const reward = {
+      type: name,
+      time: new Date().toISOString(),
+      icon,
+    };
+
     addReward(reward);
     return NextResponse.json(reward, { status: 201 });
   } catch (error) {
