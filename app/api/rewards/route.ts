@@ -1,3 +1,5 @@
+// This route is just server/db api call showcase, not doing anything with current form of the api
+// because it is using browser storage
 import { NextResponse } from "next/server";
 import { generateRewardName, generateRewardIcon } from "@/lib/rewards";
 import { addReward, getRewards } from "@/lib/storage";
