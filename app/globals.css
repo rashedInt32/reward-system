@@ -39,7 +39,7 @@ body {
 }
 
 .button {
-  @apply bg-[var(--primary)] text-white px-6 py-2 rounded-md shadow-lg text-sm hover:bg-[var(--primary)]/80 hover:shadow-[0_0_15px_rgba(45,121,109,0.5)]  hover:scale-95 active:scale-95 transition-[all] duration-200 cursor-pointer;
+  @apply bg-[var(--primary)] text-white px-6 py-2 rounded-md shadow-lg text-sm hover:bg-[var(--primary)]/80 hover:scale-95 active:scale-95 transition-[all] duration-200 cursor-pointer;
 }
 
 .progress-bar {

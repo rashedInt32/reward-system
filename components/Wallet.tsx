@@ -1,26 +1,23 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { getRewards, resetWallet } from "@/lib/storage"; // Assuming these are correctly client-side safe
+import { getRewards, resetWallet } from "@/lib/storage";
 import { AvatarPicker } from "./AvatarPicker";
+import { Button } from "./Button";
 
 export function Wallet() {
-  // 1. Initial state for server render (empty/default)
-  // This ensures the server renders a consistent initial state.
   const [rewards, setRewards] = useState<
     { type: string; time: string; icon: string }[]
   >([]);
   const [name, setName] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("😊");
-  // State to track if the component has mounted on the client
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    // 2. This code runs ONLY on the client after initial render
-    setIsMounted(true); // Mark as mounted
+    setIsMounted(true);
     setName(localStorage.getItem("walletName") || "");
     setAvatar(localStorage.getItem("avatar") || "😊");
-    setRewards(getRewards()); // Get actual rewards from localStorage on client
+    setRewards(getRewards());
 
     const update = () => setRewards(getRewards());
     window.addEventListener("storage", update);
@@ -40,16 +37,16 @@ export function Wallet() {
         {(isMounted && name) || "My Wallet"} {(isMounted && avatar) || "😊"}
       </h1>
       <AvatarPicker />
-      <button
+      <Button
         onClick={() => {
           resetWallet();
           setRewards([]);
         }}
-        className="button bg-[var(--error)] hover:bg-[var(--secondary)] hover:text-[#002829] hover:shadow-[0_0_15px_rgba(45,121,109,0.5)] hover:outline-[rgba(45,121,109,0.2)] mb-6"
+        className="button mb-6"
         aria-label="Reset wallet"
       >
         Reset Wallet
-      </button>
+      </Button>
 
       <div className="progress-bar mb-6">
         <div
