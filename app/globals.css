@@ -22,6 +22,7 @@ body {
   @apply flex items-center justify-between w-full;
 }
 
+
 .card-title {
   @apply text-white text-lg font-bold;
 }
@@ -43,7 +44,7 @@ body {
 }
 
 .button-danger {
-  @apply bg-[var(--error)] text-white px-6 py-2 rounded-md shadow-lg text-sm hover:bg-[var(--error)]/80 hover:scale-95 active:scale-95 transition-[all] duration-200 cursor-pointer;
+  @apply bg-[var(--error)] text-white px-6 py-2 rounded-md shadow-lg text-sm hover:bg-[var(--error)]/80 hover:scale-95 active:scale-95 disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:scale-100 transition-[all] disabled:hover:bg-gray-600 disabled:bg-gray-600 duration-200 cursor-pointer;
 }
 
 .progress-bar {

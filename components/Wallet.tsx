@@ -20,13 +20,13 @@ export function Wallet() {
   const [rewards, setRewards] = useState<Reward[]>([]);
   const [name, setName] = useState("");
   const [showNameEdit, setShowNameEdit] = useState<boolean>(false);
-  const [avatar, setAvatar] = useState("😊");
   const [suggestedName, setSuggestedName] = useState("");
+  const [avatar, setAvatar] = useState("😊");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    setName(localStorage.getItem("walletName") || "");
+    setName(localStorage.getItem("walletName") || "My Wallet");
     setAvatar(localStorage.getItem("avatar") || "😊");
     setRewards(getRewards());
 
@@ -40,6 +40,14 @@ export function Wallet() {
   const handleChange = (newName: string, newAvatar: string) => {
     setName(newName);
     setAvatar(newAvatar);
+  };
+
+  const handleShowEditWalletForm = (e: any) => {
+    e.preventDefault();
+    setShowNameEdit(!showNameEdit);
+    if (name.trim() === "") {
+      setName(localStorage.getItem("walletName") || "My Wallet");
+    }
   };
 
   const handleSave = () => {
@@ -57,14 +65,13 @@ export function Wallet() {
   return (
     <div className="py-6">
       <h1 className="text-3xl font-bold text-white mb-4 tracking-wide flex items-end justify-between">
-        {(isMounted && name) || "My Wallet"} {(isMounted && avatar) || "😊"}
+        <span>
+          {isMounted && name} {isMounted && avatar}
+        </span>
         <a
           href=""
           className="text-[var(--link)] text-sm underline"
-          onClick={(e) => {
-            e.preventDefault();
-            setShowNameEdit(!showNameEdit);
-          }}
+          onClick={(e) => handleShowEditWalletForm(e)}
         >
           Edit wallet name
         </a>
@@ -87,7 +94,7 @@ export function Wallet() {
         </motion.div>
       )}
 
-      <div className="flex items-center w-full gap-4 mb-4">
+      <div className="flex items-center w-full gap-4 mb-4 pt-6">
         <div className="progress-bar ">
           <div
             className="progress-fill"
@@ -99,8 +106,9 @@ export function Wallet() {
             resetWallet();
             setRewards([]);
           }}
-          className="button-danger mb-6 mt-6 flex justify-end items-end min-w-[140px]"
+          className="button-danger  min-w-[140px]"
           aria-label="Reset wallet"
+          disabled={rewards.length === 0}
         >
           Reset Wallet
         </Button>
