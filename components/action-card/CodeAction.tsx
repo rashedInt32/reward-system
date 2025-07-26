@@ -19,7 +19,7 @@ export function CodeAction() {
       inputRef.current.focus();
     }
     setCode("");
-  }, [showInput]);
+  }, [showInput, setCode]);
 
   return (
     <div className="action-card">

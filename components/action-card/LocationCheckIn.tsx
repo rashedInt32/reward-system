@@ -2,7 +2,6 @@
 import { Button } from "../Button";
 import { useActionCard } from "./useActionCard";
 import { Loader } from "../Loader";
-import { get } from "http";
 
 export type Reward = { type: string; time: string; icon: string };
 

@@ -22,12 +22,7 @@ export const useActionCard = () => {
   const validCodes = ["REWARD123", "CODE456"];
 
   // Play sound when a reward is earned
-  const playSound = () => {
-    try {
-      new Audio("/sounds/reward.mp3").play();
-    } catch (error) {}
-  };
-
+  const playSound = () => new Audio("/sounds/reward.mp3").play();
   // Generate a reward object
   const generateReward = async (name: string): Promise<Reward> => {
     const rewardName = await generateRewardName(name);
@@ -48,6 +43,7 @@ export const useActionCard = () => {
         playSound();
         toast.success("Video reward earned!");
       } catch (error) {
+        console.error("Error earning video reward:", error);
         toast.error("Failed to earn video reward");
       }
     } else {

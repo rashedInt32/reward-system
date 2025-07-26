@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
+import Image from "next/image";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { getRewards, resetWallet } from "@/lib/storage";
 import { generateRewardName } from "@/lib/rewards";
@@ -42,7 +43,7 @@ export function Wallet() {
     setAvatar(newAvatar);
   };
 
-  const handleShowEditWalletForm = (e: any) => {
+  const handleShowEditWalletForm = (e: MouseEvent) => {
     e.preventDefault();
     setShowNameEdit(!showNameEdit);
     if (name.trim() === "") {
@@ -128,9 +129,11 @@ export function Wallet() {
               transition={{ duration: 0.3 }}
               className="reward-card"
             >
-              <img
+              <Image
                 src={reward.icon}
                 alt={reward.type}
+                width={48}
+                height={48}
                 className="w-12 h-12 rounded-full"
               />
               <div>
