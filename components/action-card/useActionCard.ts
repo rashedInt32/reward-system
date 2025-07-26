@@ -1,3 +1,4 @@
+// useActionCard hook for managing all action card logic
 import { useState, RefObject } from "react";
 import { toast } from "react-hot-toast";
 import { addReward } from "@/lib/storage";
