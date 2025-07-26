@@ -5,7 +5,10 @@ export function Header() {
   return (
     <div className="nav-bar z-10">
       <nav className="container max-w-[900px] mx-auto flex justify-between items-center">
-        <Link href="/" className="flex">
+        <Link
+          href="/"
+          className="flex hover:scale-110 scale-100 transition-scale duration-300 ease-in-out"
+        >
           <Image src="/images/home.png" alt="Logo" width={35} height={35} />
         </Link>
         <Link

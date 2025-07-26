@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Earn & Collect Reward System
 
-First, run the development server:
+## Tech Stack
+- Next.js 14 (App Router, React Server Components)
+- Tailwind CSS: Vibrant, gamified design
+- Framer Motion: Reward animations
+- Local Storage: Persistent rewards
+- Geolocation/Video APIs: User actions
+- Hugging Face: AI-generated reward names/icons
 
+## Implementation
+- **Location Check-in**: Geolocation API with Haversine formula, AI-generated “Starlight Coin” style rewards.
+- **Video Watch**: HTML5 Video API for 15-second tracking, AI-generated “Quest Badge”.
+- **Code Scan**: Text input for code validation, AI-generated “Mystic Token”.
+- **Wallet**: Server-rendered page with Client Component for rewards, showing AI-generated names/icons, Wallet name edit option, super badge unlocked notification when earned 5 rewards.
+
+- **Bonus**: 24-hour check-in cooldown, wallet name/avatar customization (AI-suggested names), progress bar, sound effects, toast notification.
+
+## Demo
+[Live Demo](https://reward-system-zeta.vercel.app/)
+
+## AI Tools Used
+
+- Reward Names: meta-llama/Llama-3.1-8B-Instruct (SambaNova) via Hugging Face generates unique names based on action type.
+
+- Reward Icons: black-forest-labs/FLUX.1-dev creates 64x64 pixel icons as base64 URLs. Free tier limit reached; static icons (/images/icons/) used as fallback.
+
+- Challenges: Hugging Face free limit causes 429 errors. Solutions: Upgrade to PRO, deploy FLUX.1-dev locally (transformers), or rely on static icons.
+
+
+## Setup
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set NEXT_PUBLIC_HF_API_KEY in .env.local for AI features.

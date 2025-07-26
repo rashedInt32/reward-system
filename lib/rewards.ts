@@ -11,7 +11,7 @@ export async function generateRewardName(actionType: string): Promise<string> {
       messages: [
         {
           role: "user",
-          content: `Generate a creative name for a digital reward token related to ${actionType}, just the name please, do not add any description or conversation text, just random reward name`,
+          content: `Generate a creative name for a digital reward token related to ${actionType}, just the name please, do not add any description or conversation text, just random reward name with Code | Checkin | Video | Wallet word at the end`,
         },
       ],
       max_tokens: 20,

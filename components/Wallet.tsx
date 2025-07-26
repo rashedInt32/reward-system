@@ -116,7 +116,7 @@ export function Wallet() {
       </div>
 
       {isMounted && rewards.length >= 5 && (
-        <p className="text-[var(--secondary)] mb-4">Super Badge Unlocked!</p>
+        <p className="text-white mb-4">Super Badge Unlocked!</p>
       )}
 
       <div className="grid gap-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-2">
@@ -142,7 +142,9 @@ export function Wallet() {
                 </p>
                 <p className="text-sm text-[var(--text)] opacity-80">
                   Earned:{" "}
-                  {dayjs(new Date(reward.time).toLocaleString()).fromNow()}
+                  <span className="font-bold">
+                    {dayjs(new Date(reward.time).toLocaleString()).fromNow()}
+                  </span>
                 </p>
               </div>
             </motion.div>

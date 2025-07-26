@@ -1,8 +1,10 @@
 "use client";
 import { motion, useReducedMotion, Variants, Easing } from "framer-motion";
-import { LocationCheckIn } from "@/components/action-card/LocationCheckIn";
-import { VideoAction } from "@/components/action-card/VideoAction";
-import { CodeAction } from "@/components/action-card/CodeAction";
+import {
+  LocationCheckIn,
+  VideoAction,
+  CodeAction,
+} from "@/components/action-card";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
