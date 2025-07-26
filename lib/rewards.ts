@@ -2,6 +2,7 @@ import { InferenceClient } from "@huggingface/inference";
 
 const hf = new InferenceClient(process.env.NEXT_PUBLIC_HF_API_KEY);
 
+// This function generates a random wallet name based on the action type
 export async function generateRewardName(actionType: string): Promise<string> {
   try {
     const response = await hf.chatCompletion({
@@ -31,6 +32,7 @@ export async function generateRewardName(actionType: string): Promise<string> {
   }
 }
 
+// Random reward icon generator
 export async function generateRewardIcon() {
   const randomNumber = Math.floor(Math.random() * 47) + 1;
   return `/images/icons/${randomNumber}.png`;
@@ -41,6 +43,7 @@ type HFTextToImageResponse = {
   id?: string;
 };
 
+// This is a paid service, so ensure you have the correct API key and usage limits
 export async function generateRewardIconByAI(name: string): Promise<string> {
   try {
     const response = await hf.textToImage({

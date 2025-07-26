@@ -1,10 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { getRewards, resetWallet } from "@/lib/storage";
 import { generateRewardName } from "@/lib/rewards";
 import { AvatarPicker } from "./AvatarPicker";
 import { Button } from "./Button";
+
+dayjs.extend(relativeTime);
 
 type Reward = {
   type: string;
@@ -53,8 +57,7 @@ export function Wallet() {
   return (
     <div className="py-6">
       <h1 className="text-3xl font-bold text-white mb-4 tracking-wide flex items-end justify-between">
-        {(isMounted && (name || suggestedName)) || "My Wallet"}{" "}
-        {(isMounted && avatar) || "😊"}
+        {(isMounted && name) || "My Wallet"} {(isMounted && avatar) || "😊"}
         <a
           href=""
           className="text-[var(--link)] text-sm underline"
@@ -84,26 +87,30 @@ export function Wallet() {
         </motion.div>
       )}
 
-      <Button
-        onClick={() => {
-          resetWallet();
-          setRewards([]);
-        }}
-        className="button mb-6 mt-6"
-        aria-label="Reset wallet"
-      >
-        Reset Wallet
-      </Button>
-
-      <div className="progress-bar mb-6">
-        <div className="progress-fill" style={{ width: `${progressWidth}%` }} />
+      <div className="flex items-center w-full gap-4 mb-4">
+        <div className="progress-bar ">
+          <div
+            className="progress-fill"
+            style={{ width: `${progressWidth}%` }}
+          />
+        </div>
+        <Button
+          onClick={() => {
+            resetWallet();
+            setRewards([]);
+          }}
+          className="button-danger mb-6 mt-6 flex justify-end items-end min-w-[140px]"
+          aria-label="Reset wallet"
+        >
+          Reset Wallet
+        </Button>
       </div>
 
       {isMounted && rewards.length >= 5 && (
         <p className="text-[var(--secondary)] mb-4">Super Badge Unlocked!</p>
       )}
 
-      <div className="grid gap-4">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-2">
         {isMounted &&
           rewards.map((reward, index) => (
             <motion.div
@@ -119,11 +126,12 @@ export function Wallet() {
                 className="w-12 h-12 rounded-full"
               />
               <div>
-                <p className="font-semibold text-[var(--primary)]">
+                <p className="font-semibold text-[var(--text)] pb-1">
                   {reward.type}
                 </p>
                 <p className="text-sm text-[var(--text)] opacity-80">
-                  Earned: {new Date(reward.time).toLocaleString()}
+                  Earned:{" "}
+                  {dayjs(new Date(reward.time).toLocaleString()).fromNow()}
                 </p>
               </div>
             </motion.div>

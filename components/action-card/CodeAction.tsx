@@ -49,7 +49,7 @@ export function CodeAction() {
             </h3>
             <Button
               onClick={() => setShowInput(false)}
-              className="rounded-md border-[var(--error)] border-2 h-8 w-8 cursor-pointer text-[var(--error)] text-2xl flex items-center justify-center hover:bg-[var(--error)] hover:text-white transition-colors"
+              className="rounded-md border-red-400 border-2 h-8 w-8 cursor-pointer text-red-400 text-2xl flex items-center justify-center hover:bg-red-400 hover:text-white transition-colors"
             >
               &times;
             </Button>

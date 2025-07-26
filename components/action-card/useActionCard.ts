@@ -111,7 +111,7 @@ export const useActionCard = () => {
           setLoading(false);
         } else {
           setTimeout(() => {
-            toast.error("Too far from location!");
+            toast.error("You are too far from location!");
             setLoading(false);
           }, 1000);
         }

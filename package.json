@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@huggingface/inference": "^4.5.3",
+    "dayjs": "^1.11.13",
     "framer-motion": "^12.23.6",
     "next": "15.4.2",
     "react": "19.1.0",
