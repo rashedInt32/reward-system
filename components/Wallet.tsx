@@ -43,7 +43,7 @@ export function Wallet() {
     setAvatar(newAvatar);
   };
 
-  const handleShowEditWalletForm = (e: MouseEvent) => {
+  const handleShowEditWalletForm = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setShowNameEdit(!showNameEdit);
     if (name.trim() === "") {
